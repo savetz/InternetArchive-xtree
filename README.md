@@ -32,6 +32,6 @@ Text mode: built with ./xtree collection-identifier
         |INFO-HAMS Digest archive (info-hams)
         |Packet-Radio Digest archive (packet-radio-digest)
         |QRP-L Digest (qrp-l)
-
+        
 HTML mode: built with ./plantatree collection-identifier
 ![HTML tree view has collapasable sub-categories](html-sample.png)
