@@ -34,4 +34,5 @@ Text mode:
         |QRP-L Digest (qrp-l)
 
 HTML mode:
+<img src="html-sample.png" width="200">
 ![HTML tree view has collapasable sub-categories](html-sample.png)
