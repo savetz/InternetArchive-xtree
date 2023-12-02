@@ -7,6 +7,7 @@ An Internet Archive [collection](https://help.archive.org/help/collections-a-bas
 
 **Sample Output**
 Text mode: built with ./xtree collection-identifier
+
     %./xtree.sh dlarc
     Digital Library of Amateur Radio & Communications (dlarc)
       |100 years of the Fort Wayne Radio Club (fortwayneradioclub)
