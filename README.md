@@ -35,4 +35,4 @@ Text mode: built with ./xtree collection-identifier
         |QRP-L Digest (qrp-l)
         
 HTML mode: built with ./plantatree collection-identifier
-![HTML tree view has collapasable sub-categories](html-sample.png)
+<img src="html-sample.png" width="500">
