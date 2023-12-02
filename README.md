@@ -1,7 +1,7 @@
 # InternetArchive-xtree
 Builds a tree view of an Internet Archive collection's sub-collections
 
-An Internet Archive [collection](https://help.archive.org/help/collections-a-basic-guide/) may have any number of sub-collections (and even sub-sub-collections.) It can be tricky to maintain or explore collections with many sub-collections. InternetArchive-xtree creates a tree of all the sub-collections under a collection. Output can be as text or HTML.
+An Internet Archive [collection](https://help.archive.org/help/collections-a-basic-guide/) may have any number of sub-collections (and even sub-sub-collections.) It can be tricky to maintain or explore collections with many sub-collections. InternetArchive-xtree creates a tree of all the sub-collections under a collection. Output can be text or HTML.
 
 **Requirements:** the [ia command line tool](https://archive.org/developers/quick-start-cli.html) and and [GNU Parallel](https://opensource.com/article/18/5/gnu-parallel).
 
