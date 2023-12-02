@@ -6,7 +6,7 @@ An Internet Archive [collection](https://help.archive.org/help/collections-a-bas
 **Requirements:** the [ia command line tool](https://archive.org/developers/quick-start-cli.html) and and [GNU Parallel](https://opensource.com/article/18/5/gnu-parallel).
 
 **Sample Output**
-Text mode:
+Text mode: built with ./xtree collection-identifier
     %./xtree.sh dlarc
     Digital Library of Amateur Radio & Communications (dlarc)
       |100 years of the Fort Wayne Radio Club (fortwayneradioclub)
@@ -33,5 +33,5 @@ Text mode:
         |Packet-Radio Digest archive (packet-radio-digest)
         |QRP-L Digest (qrp-l)
 
-HTML mode:
+HTML mode: built with ./plantatree collection-identifier
 ![HTML tree view has collapasable sub-categories](html-sample.png)
