@@ -2,11 +2,11 @@
 #show a tree of all the sub-collections and sub-sub collections under a collection.
 #Kay Savetz, Dec 1 2023, released under MIT license https://opensource.org/licenses/MIT
 #requires ia command line tool (https://archive.org/developers/quick-start-cli.html)
-#  and GNU Parallel
 #v 0.2 look for subcollections also when collection doesn't have the base collection as an ancestor (@)
 #v 0.3 works when the parent collection(s) is "null" or other non-array
 #v 0.4 fixes borrowed collections (@)
 #v 0.5 combine text and html output options into one script, with optional -html argument
+#v 0.6 removed use of gnu parallel. It's slower now but more reliable: less likely to overwhelm IA's server
 
 if [ $# -lt 1 ] || [ $# -gt 2 ]; then
   echo "Usage: $0 [-html] collection-identifier"
@@ -29,7 +29,7 @@ BASE="${!#}"
 collection ()
 {
     INDENT=$((INDENT+INTSPACES))
-    COLS=$(ia search "collection:$1 mediatype:collection" -i)
+    COLS=$(ia search "collection:$1 AND mediatype:collection" -i)
     
     list=()
     for each in $COLS
@@ -79,9 +79,48 @@ collection ()
                 #Get a list of all the sub-collections of the potential parent.
                 #If identifier is in any of those sub-collections, skip this identifier: it is a (great?)grandchild, not a child
 
-                newcollections=$(ia search $1 mediatype:collection -i | grep -v ^$1$)
-                TEST=$(parallel ia search "identifier:$IDENTIFIER collection:{}" -i ::: $newcollections)
-                if [ -z "$TEST" ]; then  #if no hits, it's a child of $1. Mazel tov!
+
+                newcollections=$(ia search "$1 AND mediatype:collection" -i | grep -v ^$1$)
+
+                # Initialize TEST as an empty string
+                TEST=""
+
+                # Loop through newcollections and process each one
+                for collection in $newcollections; do
+                    #echo "Processing collection: $collection"
+
+                    # Retry logic for transient errors
+                    max_retries=10
+                    attempt=1
+                    while true; do
+                        output=$(ia search "identifier:$IDENTIFIER AND collection:$collection" -i 2>error.log)
+                        exit_code=$?
+
+                        if [ $exit_code -eq 0 ]; then
+                            # Command succeeded, append output to TEST
+                            TEST+="$output"$'\n'
+                            break
+                        fi
+
+                        # Check for the specific transient error
+                        if grep -q "AttributeError: 'NoneType' object has no attribute 'get'" error.log; then
+                            echo "Transient error detected. Retrying ($attempt/$max_retries)..."
+                            attempt=$((attempt + 1))
+                            if [ $attempt -gt $max_retries ]; then
+                                echo "Maximum retries reached for collection: $collection. Skipping."
+                                break
+                            fi
+                            sleep 5
+                        else
+                            #echo "Unexpected error occurred."
+                            break
+                        fi
+                    done
+                done
+
+                # Check if TEST is empty
+                if [ -z "$TEST" ]; then
+                    # If no hits, it's a child of $1
                     printf "%0.s$INTCHAR" $(seq 1 $INDENT)
                     if [ "$HTML" -eq 1 ]; then
                         echo "<a href=https://archive.org/details/$IDENTIFIER>$TITLE@</a>"
@@ -90,6 +129,7 @@ collection ()
                     fi
                     collection $IDENTIFIER
                 fi
+
                 
             fi
         fi
