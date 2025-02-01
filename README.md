@@ -6,7 +6,7 @@ An Internet Archive [collection](https://help.archive.org/help/collections-a-bas
 **Requirements:** the [ia command line tool](https://archive.org/developers/quick-start-cli.html), and [jq](https://jqlang.github.io/jq/).
 
 **Sample Output**
-Text mode: built with ./xtree collection-identifier
+Text mode: built with `./xtree collection-identifier`
 
     %./xtree.sh dlarc
     Digital Library of Amateur Radio & Communications (dlarc)
@@ -34,7 +34,7 @@ Text mode: built with ./xtree collection-identifier
         |Packet-Radio Digest archive (packet-radio-digest)
         |QRP-L Digest (qrp-l)
         
-HTML mode: built with ./plantatree collection-identifier
+HTML mode: built with `./plantatree collection-identifier`
 
 <img src="html-sample.png" width="500">
 
